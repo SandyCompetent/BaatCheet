@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class ContactPage extends StatefulWidget {
+  const ContactPage({Key? key}) : super(key: key);
+
   @override
   _ContactPageState createState() => _ContactPageState();
 }
@@ -8,72 +10,65 @@ class ContactPage extends StatefulWidget {
 class _ContactPageState extends State<ContactPage> {
   @override
   Widget build(BuildContext context) {
-    return new Container(
-      child: Column(
-        children: <Widget>[
-          Container(
-            width: double.infinity,
-            padding: EdgeInsets.all(20),
-            color: Colors.redAccent,
-            child: Center(
-              child: Column(
-                children: <Widget>[
-                  Container(
-                    width: 100,
-                    height: 100,
-                    margin: EdgeInsets.only(
-                      top: 30,
-                      bottom: 10,
-                    ),
-                    child: Container(
-                      child: Column(
-                        children: <Widget>[
-                          Material(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(50.0)),
-                            child: Image.asset('assets/app_logo.png'),
-                          )
-                        ],
-                      ),
+    return Column(
+      children: <Widget>[
+        Container(
+          width: double.infinity,
+          padding: const EdgeInsets.all(20),
+          color: Colors.redAccent,
+          child: Center(
+            child: Column(
+              children: <Widget>[
+                Container(
+                  width: 100,
+                  height: 100,
+                  margin: const EdgeInsets.only(
+                    top: 30,
+                    bottom: 10,
+                  ),
+                  child: const Material(
+                    borderRadius: BorderRadius.all(Radius.circular(50.0)),
+                    child: Image(
+                      image: AssetImage('assets/app_logo.png'),
                     ),
                   ),
-                  Text(
-                    'Sandeep Malviya',
-                    style: TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
+                ),
+                const Text(
+                  'Sandeep Malviya',
+                  style: TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
                   ),
-                  SizedBox(
-                    height: 40.0,
+                ),
+                const SizedBox(
+                  height: 40.0,
+                ),
+                const Text(
+                  'Founder and CEO of SandyTech "Lets get started"',
+                  style: TextStyle(
+                    color: Colors.white,
                   ),
-                  Text(
-                    'Founder and CEO of SandyTech "Lets get started"',
-                    style: TextStyle(
-                      color: Colors.white,
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
-          CustomListTile('Email Address', () => {}),
-          CustomListTile('Telephone', () => {}),
-          CustomListTile('Notification', () => {}),
-          CustomListTile('Settings', () => {}),
-          CustomListTile('Feedback', () => {}),
-          CustomListTile('Get help', () => {}),
-        ],
-      ),
+        ),
+        CustomListTile('Email Address', () => {}),
+        CustomListTile('Telephone', () => {}),
+        CustomListTile('Notification', () => {}),
+        CustomListTile('Settings', () => {}),
+        CustomListTile('Feedback', () => {}),
+        CustomListTile('Get help', () => {}),
+      ],
     );
   }
 }
 
 class CustomListTile extends StatelessWidget {
-  String text;
-  Function onTap;
-  CustomListTile(this.text, this.onTap);
+  final String text;
+  final Function() onTap;
+  const CustomListTile(this.text, this.onTap, {Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -84,7 +79,7 @@ class CustomListTile extends StatelessWidget {
         child: InkWell(
           splashColor: Colors.redAccent,
           onTap: onTap,
-          child: Container(
+          child: SizedBox(
             height: 50,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -95,14 +90,14 @@ class CustomListTile extends StatelessWidget {
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
                         text,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 16.0,
                         ),
                       ),
                     ),
                   ],
                 ),
-                Icon(Icons.arrow_right)
+                const Icon(Icons.arrow_right)
               ],
             ),
           ),

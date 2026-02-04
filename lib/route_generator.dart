@@ -1,12 +1,13 @@
+import 'package:baatcheet/main.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_master_template/main.dart';
-import 'package:flutter_master_template/src/screen/conversation_screen.dart';
-import 'package:flutter_master_template/src/screen/login_screen.dart';
-import 'package:flutter_master_template/src/screen/splash_screen.dart';
+
+import 'src/screen/conversation_screen.dart';
+import 'src/screen/login_screen.dart';
+import 'src/screen/splash_screen.dart';
 
 const String splashRoute = '/Splash';
 const String loginRoute = '/Login';
-const String preRoute = '/Preference';
+const String homeRoute = '/Home';
 const String converRoute = '/Conversation';
 
 class RouteGenerator {
@@ -17,10 +18,10 @@ class RouteGenerator {
 
       case loginRoute:
         return MaterialPageRoute(builder: (_) => LoginScreen());
-      case preRoute:
+      case homeRoute:
         return MaterialPageRoute(builder: (_) => MyHomePage());
       case converRoute:
-        return MaterialPageRoute(builder: (_) => ChatWindow());
+        return MaterialPageRoute(builder: (_) => ConversationScreen());
 
       default:
         return MaterialPageRoute(

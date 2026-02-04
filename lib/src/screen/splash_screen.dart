@@ -5,10 +5,10 @@ import '../../route_generator.dart';
 import '../../project_meta_data.dart';
 
 class SplashScreen extends StatefulWidget {
-  SplashScreen({Key key}) : super(key: key);
+  const SplashScreen({Key? key}) : super(key: key);
 
   @override
-  _SplashScreenState createState() => _SplashScreenState();
+  State<SplashScreen> createState() => _SplashScreenState();
 }
 
 class _SplashScreenState extends State<SplashScreen> {
@@ -18,37 +18,37 @@ class _SplashScreenState extends State<SplashScreen> {
 
     Future.delayed(const Duration(seconds: 2), () {
       Navigator.of(context)
-          .pushNamedAndRemoveUntil(preRoute, (Route<dynamic> route) => false);
+          .pushNamedAndRemoveUntil(loginRoute, (Route<dynamic> route) => false);
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setEnabledSystemUIOverlays([]);
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
     return Scaffold(
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(appName, style: Theme.of(context).textTheme.headline5),
-            SizedBox(
+            Text(appName, style: Theme.of(context).textTheme.displayMedium),
+            const SizedBox(
               height: 20,
             ),
-            Text(appVersion, style: Theme.of(context).textTheme.headline6),
-            SizedBox(
+            Text(appVersion, style: Theme.of(context).textTheme.headlineSmall),
+            const SizedBox(
               height: 40,
             ),
             Image(
-                image: AssetImage(appLogo),
+                image: const AssetImage(appLogo),
                 width: 128,
                 height: 128,
                 fit: BoxFit.cover),
-            SizedBox(
+            const SizedBox(
               height: 40,
             ),
             CircularProgressIndicator(
                 valueColor: AlwaysStoppedAnimation<Color>(
-                    Theme.of(context).accentColor))
+                    Theme.of(context).colorScheme.secondary))
           ],
         ),
       ),

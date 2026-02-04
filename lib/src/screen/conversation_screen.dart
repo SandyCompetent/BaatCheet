@@ -1,203 +1,106 @@
 import 'package:flutter/material.dart';
+import 'package:baatcheet/src/widgets/message_item.dart';
 
-class ChatWindow extends StatefulWidget {
+class ConversationScreen extends StatefulWidget {
+  const ConversationScreen({Key? key}) : super(key: key);
+
   @override
-  _ChatWindowState createState() => _ChatWindowState();
+  _ConversationScreenState createState() => _ConversationScreenState();
 }
 
-class _ChatWindowState extends State<ChatWindow> {
-  List<String> _messages;
+class _ConversationScreenState extends State<ConversationScreen> {
+  final List<String> _messages = ["Hi! How are you?"];
 
-  TextEditingController textEditingController;
-  ScrollController scrollController;
-
-  bool enableButton = false;
+  final TextEditingController _textEditingController = TextEditingController();
+  final ScrollController _scrollController = ScrollController();
 
   @override
-  void initState() {
-    _messages = List<String>();
-
-    _messages.add("Hi! How are you?");
-
-    textEditingController = TextEditingController();
-
-    scrollController = ScrollController();
-
-    super.initState();
+  void dispose() {
+    _textEditingController.dispose();
+    _scrollController.dispose();
+    super.dispose();
   }
 
-  void handleSendMessage() {
-    var text = textEditingController.value.text;
-    textEditingController.clear();
+  void _handleSendMessage() {
+    final text = _textEditingController.text;
+    _textEditingController.clear();
     setState(() {
       _messages.add(text);
-      enableButton = false;
     });
 
-    Future.delayed(Duration(milliseconds: 100), () {
-      scrollController.animateTo(scrollController.position.maxScrollExtent,
-          curve: Curves.ease, duration: Duration(milliseconds: 500));
+    Future.delayed(const Duration(milliseconds: 100), () {
+      _scrollController.animateTo(_scrollController.position.maxScrollExtent,
+          curve: Curves.ease, duration: const Duration(milliseconds: 500));
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    var textInput = Row(
-      children: <Widget>[
-        Expanded(
-          child: Padding(
-            padding: const EdgeInsets.only(left: 8.0),
-            child: TextField(
-              onChanged: (text) {
-                setState(() {
-                  enableButton = text.isNotEmpty;
-                });
-              },
-              decoration: InputDecoration.collapsed(
-                hintText: "Type a message",
-              ),
-              controller: textEditingController,
-            ),
-          ),
-        ),
-        enableButton
-            ? IconButton(
-                color: Theme.of(context).primaryColor,
-                icon: Icon(
-                  Icons.send,
-                ),
-                disabledColor: Colors.grey,
-                onPressed: handleSendMessage,
-              )
-            : IconButton(
-                color: Colors.blue,
-                icon: Icon(
-                  Icons.send,
-                ),
-                disabledColor: Colors.grey,
-                onPressed: null,
-              )
-      ],
-    );
-
     return Scaffold(
-      resizeToAvoidBottomPadding: true,
+      resizeToAvoidBottomInset: true,
       appBar: AppBar(
         backgroundColor: Colors.white,
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.arrow_back),
-            color: Colors.redAccent,
-            onPressed: () {},
-          ),
-        ],
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          color: Colors.redAccent,
+          onPressed: () => Navigator.of(context).pop(),
+        ),
       ),
       body: Column(
         children: <Widget>[
           Expanded(
             child: ListView.builder(
-              controller: scrollController,
+              controller: _scrollController,
               itemCount: _messages.length,
               itemBuilder: (context, index) {
-                bool reverse = false;
-
-                if (index % 2 == 0) {
-                  reverse = true;
-                }
-
-                var avatar = Padding(
-                  padding:
-                      const EdgeInsets.only(left: 8.0, bottom: 8.0, right: 8.0),
-                  child: CircleAvatar(
-                    child: Text("A"),
-                  ),
-                );
-
-                var triangle = CustomPaint(
-                  painter: Triangle(),
-                );
-
-                var messagebody = DecoratedBox(
-                  decoration: BoxDecoration(
-                    color: Colors.redAccent,
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: Text(_messages[index]),
-                    ),
-                  ),
-                );
-
-                Widget message;
-
-                if (reverse) {
-                  message = Stack(
-                    children: <Widget>[
-                      messagebody,
-                      Positioned(right: 0, bottom: 0, child: triangle),
-                    ],
-                  );
-                } else {
-                  message = Stack(
-                    children: <Widget>[
-                      Positioned(left: 0, bottom: 0, child: triangle),
-                      messagebody,
-                    ],
-                  );
-                }
-
-                if (reverse) {
-                  return Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: message,
-                      ),
-                      avatar,
-                    ],
-                  );
-                } else {
-                  return Row(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: <Widget>[
-                      avatar,
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: message,
-                      ),
-                    ],
-                  );
-                }
+                final bool reverse = index % 2 == 0;
+                return _buildMessage(reverse, _messages[index]);
               },
             ),
           ),
-          Divider(height: 2.0),
-          textInput
+          const Divider(height: 2.0),
+          _buildTextInput(),
         ],
       ),
     );
   }
-}
 
-class Triangle extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    var paint = Paint()..color = Colors.redAccent;
-
-    var path = Path();
-    path.lineTo(10, 0);
-    path.lineTo(0, -10);
-    path.lineTo(-10, 0);
-    canvas.drawPath(path, paint);
+  Widget _buildMessage(bool reverse, String messageText) {
+    return Align(
+      alignment: reverse ? Alignment.centerRight : Alignment.centerLeft,
+      child: MessageItem(
+        imgRef: 'assets/app_logo.png',
+        txtPersonName: "User",
+        txtMessage: messageText,
+        txtTime: "12:00",
+      ),
+    );
   }
 
-  @override
-  bool shouldRepaint(CustomPainter oldDelegate) {
-    return true;
+  Widget _buildTextInput() {
+    return Row(
+      children: <Widget>[
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.only(left: 8.0),
+            child: TextField(
+              onChanged: (text) => setState(() {}),
+              decoration: const InputDecoration.collapsed(
+                hintText: "Type a message",
+              ),
+              controller: _textEditingController,
+            ),
+          ),
+        ),
+        IconButton(
+          color: Theme.of(context).primaryColor,
+          icon: const Icon(
+            Icons.send,
+          ),
+          onPressed:
+              _textEditingController.text.isNotEmpty ? _handleSendMessage : null,
+        )
+      ],
+    );
   }
 }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class ListPage extends StatefulWidget {
+  const ListPage({Key? key}) : super(key: key);
+
   @override
   _ListPageState createState() => _ListPageState();
 }
@@ -8,11 +10,11 @@ class ListPage extends StatefulWidget {
 class _ListPageState extends State<ListPage> {
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
+    return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: new Text(
+        title: const Text(
           "Edit",
           style: TextStyle(
             color: Colors.red,
@@ -20,7 +22,7 @@ class _ListPageState extends State<ListPage> {
         ),
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.search),
+            icon: const Icon(Icons.search),
             color: Colors.redAccent,
             onPressed: () {},
           ),
