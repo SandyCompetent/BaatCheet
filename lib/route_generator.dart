@@ -14,18 +14,18 @@ class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case splashRoute:
-        return MaterialPageRoute(builder: (_) => SplashScreen());
+        return MaterialPageRoute(builder: (_) => const SplashScreen());
 
       case loginRoute:
-        return MaterialPageRoute(builder: (_) => LoginScreen());
+        return MaterialPageRoute(builder: (_) => const LoginScreen());
       case homeRoute:
-        return MaterialPageRoute(builder: (_) => MyHomePage());
+        return MaterialPageRoute(builder: (_) => const MyHomePage());
       case converRoute:
-        return MaterialPageRoute(builder: (_) => ConversationScreen());
+        return MaterialPageRoute(builder: (_) => const ConversationScreen());
 
       default:
         return MaterialPageRoute(
-            builder: (_) => Scaffold(body: SizedBox(height: 0)));
+            builder: (_) => const Scaffold(body: SizedBox(height: 0)));
     }
   }
 }

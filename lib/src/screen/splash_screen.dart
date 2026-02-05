@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../../route_generator.dart';
 import '../../project_meta_data.dart';
+import '../../route_generator.dart';
 
 class SplashScreen extends StatefulWidget {
-  const SplashScreen({Key? key}) : super(key: key);
+  const SplashScreen({super.key});
 
   @override
   State<SplashScreen> createState() => _SplashScreenState();
@@ -38,8 +38,8 @@ class _SplashScreenState extends State<SplashScreen> {
             const SizedBox(
               height: 40,
             ),
-            Image(
-                image: const AssetImage(appLogo),
+            const Image(
+                image: AssetImage(appLogo),
                 width: 128,
                 height: 128,
                 fit: BoxFit.cover),

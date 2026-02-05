@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
 import 'package:baatcheet/src/widgets/message_item.dart';
+import 'package:flutter/material.dart';
 
 class ConversationScreen extends StatefulWidget {
-  const ConversationScreen({Key? key}) : super(key: key);
+  const ConversationScreen({super.key});
 
   @override
   _ConversationScreenState createState() => _ConversationScreenState();
@@ -97,8 +97,9 @@ class _ConversationScreenState extends State<ConversationScreen> {
           icon: const Icon(
             Icons.send,
           ),
-          onPressed:
-              _textEditingController.text.isNotEmpty ? _handleSendMessage : null,
+          onPressed: _textEditingController.text.isNotEmpty
+              ? _handleSendMessage
+              : null,
         )
       ],
     );

@@ -8,23 +8,27 @@ import 'package:flutter/material.dart';
 import 'route_generator.dart';
 
 void main() {
-  runApp(EntryPoint());
+  runApp(const EntryPoint());
 }
 
 class EntryPoint extends StatelessWidget {
+  const EntryPoint({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
+    return MaterialApp(
         title: 'BaatCheet',
         theme: lightTheme,
         darkTheme: darkTheme,
         initialRoute: splashRoute,
         onGenerateRoute: RouteGenerator.generateRoute,
-        home: MyHomePage());
+        home: const MyHomePage());
   }
 }
 
 class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key});
+
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
@@ -46,7 +50,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
+    return Scaffold(
       body: _children[_currentIndex],
       floatingActionButton: FloatingActionButton(
         onPressed: () {},

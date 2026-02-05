@@ -3,7 +3,7 @@ import 'package:baatcheet/src/widgets/message_item.dart';
 import 'package:flutter/material.dart';
 
 class MessageScreen extends StatefulWidget {
-  const MessageScreen({Key? key}) : super(key: key);
+  const MessageScreen({super.key});
 
   @override
   _MessageScreenState createState() => _MessageScreenState();
@@ -17,11 +17,27 @@ class _MessageScreenState extends State<MessageScreen> {
         title: const Text(appName),
       ),
       body: ListView(
-        children: [
-          MessageItem(imgRef: appLogo, txtPersonName: 'Raja', txtMessage: 'i am raja', txtTime: '08:00'),
-          MessageItem(imgRef: appLogo, txtPersonName: 'Rani', txtMessage: 'i am rani', txtTime: '07:00'),
-          MessageItem(imgRef: appLogo, txtPersonName: 'Choor', txtMessage: 'i am choor', txtTime: '10:00'),
-          MessageItem(imgRef: appLogo, txtPersonName: 'Police', txtMessage: 'i am polic', txtTime: '12:00'),
+        children: const [
+          MessageItem(
+              imgRef: appLogo,
+              txtPersonName: 'Raja',
+              txtMessage: 'i am raja',
+              txtTime: '08:00'),
+          MessageItem(
+              imgRef: appLogo,
+              txtPersonName: 'Rani',
+              txtMessage: 'i am rani',
+              txtTime: '07:00'),
+          MessageItem(
+              imgRef: appLogo,
+              txtPersonName: 'Choor',
+              txtMessage: 'i am choor',
+              txtTime: '10:00'),
+          MessageItem(
+              imgRef: appLogo,
+              txtPersonName: 'Police',
+              txtMessage: 'i am polic',
+              txtTime: '12:00'),
         ],
       ),
     );

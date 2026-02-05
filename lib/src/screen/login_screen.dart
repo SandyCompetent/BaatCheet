@@ -1,10 +1,9 @@
-
 import 'package:baatcheet/route_generator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+  const LoginScreen({super.key});
 
   @override
   _LoginScreenState createState() => _LoginScreenState();
@@ -27,8 +26,8 @@ class _LoginScreenState extends State<LoginScreen> {
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.redAccent,
       body: Container(
-        padding:
-            const EdgeInsets.only(top: 100.0, right: 20.0, left: 20.0, bottom: 20.0),
+        padding: const EdgeInsets.only(
+            top: 100.0, right: 20.0, left: 20.0, bottom: 20.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
@@ -62,9 +61,9 @@ class _LoginScreenState extends State<LoginScreen> {
             const SizedBox(
               height: 20.0,
             ),
-            Row(
+            const Row(
               mainAxisAlignment: MainAxisAlignment.end,
-              children: const <Widget>[
+              children: <Widget>[
                 Text(
                   "Forgot Password?",
                   style: TextStyle(
@@ -78,9 +77,9 @@ class _LoginScreenState extends State<LoginScreen> {
             const SizedBox(
               height: 10.0,
             ),
-            Row(
+            const Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const <Widget>[
+              children: <Widget>[
                 Text("Already have an account?",
                     style: TextStyle(
                       color: Colors.white,

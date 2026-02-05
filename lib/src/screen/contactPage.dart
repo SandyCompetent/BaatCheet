@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ContactPage extends StatefulWidget {
-  const ContactPage({Key? key}) : super(key: key);
+  const ContactPage({super.key});
 
   @override
   _ContactPageState createState() => _ContactPageState();
@@ -68,7 +68,9 @@ class _ContactPageState extends State<ContactPage> {
 class CustomListTile extends StatelessWidget {
   final String text;
   final Function() onTap;
-  const CustomListTile(this.text, this.onTap, {Key? key}) : super(key: key);
+
+  const CustomListTile(this.text, this.onTap, {super.key});
+
   @override
   Widget build(BuildContext context) {
     return Padding(
