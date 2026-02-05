@@ -1,8 +1,8 @@
-
 import 'package:baatcheet/chat_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:google_mlkit_smart_reply/google_mlkit_smart_reply.dart';
+import 'package:google_mlkit_smart_reply/google_mlkit_smart_reply.dart'
+    as ml_kit;
 
 class ConversationScreen extends StatefulWidget {
   const ConversationScreen({super.key});
@@ -15,7 +15,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
   final ChatService _chatService = ChatService();
   final TextEditingController _textEditingController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
-  final SmartReply _smartReply = SmartReply();
+  final ml_kit.SmartReply _smartReply = ml_kit.SmartReply();
   List<String> _suggestions = [];
 
   @override
@@ -39,20 +39,30 @@ class _ConversationScreenState extends State<ConversationScreen> {
         _suggestions.clear();
       });
 
-      final List<TextMessage> conversation = [];
+      final conversation = <ml_kit.TextMessage>[];
       for (var doc in snapshot.docs) {
         final data = doc.data() as Map<String, dynamic>;
         final text = data['text'] ?? '';
         final isRemote = data['isRemote'] ?? false;
+        final timestamp =
+            (data['timestamp'] as Timestamp?)?.millisecondsSinceEpoch ??
+                DateTime.now().millisecondsSinceEpoch;
 
-        conversation.add(
-          TextMessage(
+        if (isRemote) {
+          conversation.add(ml_kit.TextMessage(
             text: text,
-            timestamp: (data['timestamp'] as Timestamp?)?.millisecondsSinceEpoch ?? DateTime.now().millisecondsSinceEpoch,
-            userId: isRemote ? 'remote' : 'local',
-            isLocalUser: !isRemote,
-          ),
-        );
+            timestamp: timestamp,
+            userId: 'remote',
+            isLocalUser: false,
+          ));
+        } else {
+          conversation.add(ml_kit.TextMessage(
+            text: text,
+            timestamp: timestamp,
+            userId: 'local',
+            isLocalUser: true,
+          ));
+        }
       }
 
       if (conversation.isNotEmpty) {
@@ -61,9 +71,9 @@ class _ConversationScreenState extends State<ConversationScreen> {
     });
   }
 
-  void _generateReplies(List<TextMessage> conversation) async {
+  void _generateReplies(List<ml_kit.TextMessage> conversation) async {
     final result = await _smartReply.suggestReplies(conversation);
-    if (result.status == SmartReplySuggestionResultStatus.success) {
+    if (result.status == ml_kit.SmartReplySuggestionResultStatus.success) {
       setState(() {
         _suggestions = result.suggestions;
       });
@@ -116,7 +126,8 @@ class _ConversationScreenState extends State<ConversationScreen> {
                 final messages = snapshot.data!.docs;
 
                 // Schedule scroll to bottom after layout
-                WidgetsBinding.instance.addPostFrameCallback((_) => _scrollToBottom());
+                WidgetsBinding.instance
+                    .addPostFrameCallback((_) => _scrollToBottom());
 
                 return ListView.builder(
                   controller: _scrollController,
@@ -125,7 +136,9 @@ class _ConversationScreenState extends State<ConversationScreen> {
                     final data = messages[index].data() as Map<String, dynamic>;
                     final isRemote = data['isRemote'] ?? false;
                     final text = data['text'] ?? '';
-                    final timestamp = (data['timestamp'] as Timestamp?)?.toDate() ?? DateTime.now();
+                    final timestamp =
+                        (data['timestamp'] as Timestamp?)?.toDate() ??
+                            DateTime.now();
 
                     return _buildMessage(isRemote, text, timestamp);
                   },
