@@ -39,7 +39,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
         _suggestions.clear();
       });
 
-      final conversation = <ml_kit.TextMessage>[];
+      final conversation = <ml_kit.SmartReplyTextMessage>[];
       for (var doc in snapshot.docs) {
         final data = doc.data() as Map<String, dynamic>;
         final text = data['text'] ?? '';
@@ -49,14 +49,14 @@ class _ConversationScreenState extends State<ConversationScreen> {
                 DateTime.now().millisecondsSinceEpoch;
 
         if (isRemote) {
-          conversation.add(ml_kit.TextMessage(
+          conversation.add(ml_kit.SmartReplyTextMessage(
             text: text,
             timestamp: timestamp,
             userId: 'remote',
             isLocalUser: false,
           ));
         } else {
-          conversation.add(ml_kit.TextMessage(
+          conversation.add(ml_kit.SmartReplyTextMessage(
             text: text,
             timestamp: timestamp,
             userId: 'local',
@@ -71,7 +71,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
     });
   }
 
-  void _generateReplies(List<ml_kit.TextMessage> conversation) async {
+  void _generateReplies(List<ml_kit.SmartReplyTextMessage> conversation) async {
     final result = await _smartReply.suggestReplies(conversation);
     if (result.status == ml_kit.SmartReplySuggestionResultStatus.success) {
       setState(() {
